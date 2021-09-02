@@ -1,14 +1,33 @@
+import {useEffect, useState} from 'react'
+
+const colorMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+
 const App = () => {
+    const [state, setState] = useState(colorMode)
+
+    useEffect(() => {
+        const docDoc = document.documentElement.classList
+        state === 'dark' ? docDoc.add('dark') : docDoc.remove('dark')
+    }, [state])
+
+    const toggleTheme = () => {
+        setState(prevState => (prevState === 'light' ? 'dark' : 'light'))
+    }
+
     return (
-        <div className={`h-screen w-screen grid place-items-center`}>
-            <p
-                className={`font-extrabold text-[6rem] text-indigo-500 text-center`}
-            >
-                React Task Logger
-                <span role="img" aria-label="techie">
-                    🧑‍💻
-                </span>
-            </p>
+        <div
+            className={`h-screen w-screen grid place-items-center dark:bg-gray-900 dark:text-gray-50`}
+        >
+            <div className="flex flex-col align-items-center justify-content-center">
+                <p className={`font-extrabold text-[6rem] text-center`}>
+                    React Task Logger
+                </p>
+                <button className="text-6xl" onClick={toggleTheme}>
+                    {state === 'dark' ? '🌜' : '☀️'}
+                </button>
+            </div>
         </div>
     )
 }
