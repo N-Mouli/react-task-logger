@@ -1,20 +1,20 @@
 import {useEffect, useState} from 'react'
 
-const colorMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
-
 const App = () => {
-    const [state, setState] = useState(colorMode)
+    const [state, setState] = useState(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light',
+    )
 
     useEffect(() => {
-        const docDoc = document.documentElement.classList
-        state === 'dark' ? docDoc.add('dark') : docDoc.remove('dark')
+        state === 'dark'
+            ? document.documentElement.classList.add('dark')
+            : document.documentElement.classList.remove('dark')
     }, [state])
 
-    const toggleTheme = () => {
+    const toggleTheme = () =>
         setState(prevState => (prevState === 'light' ? 'dark' : 'light'))
-    }
 
     return (
         <div
@@ -33,30 +33,3 @@ const App = () => {
 }
 
 export default App
-
-// type Task = {
-//     taskId: string
-//     taskName: string
-//     taskStatus: 'in-progress' | 'completed' | 'cancelled'
-//     taskDescription: string
-//     estimatedTime: string
-//     timeTaken: string
-//     dateReceived: Date
-//     dateCompleted: Date
-// }
-
-// type TaskLogs = Array<Task>
-
-// type ReadBy = {propertyName: string; propertyValue?: string}
-
-// type Status = 'Processing Info' | 'Success Info' | 'Error Info'
-
-// type CreateTask = (taskLogs: TaskLogs, task: Task) => Status
-
-// type ReadTask = (taskLogs: TaskLogs, task: Task) => Status
-
-// type UpdateTask = (taskLogs: TaskLogs, taskId: string, task: Task) => Status
-
-// type DeleteTask = (taskLogs: TaskLogs, taskId: string) => Status
-
-// type TaskLogger = (taskLogs: TaskLogs) => string
